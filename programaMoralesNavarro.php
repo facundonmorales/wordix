@@ -23,8 +23,9 @@ function cargarColeccionPalabras()
     $coleccionPalabras = [
         "MUJER", "QUESO", "FUEGO", "CASAS", "RASGO",
         "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
-        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS"
+        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
         /* ... COMPLETAR ... Agregar 5 palabras más */
+        "NEGRO", "PERRO", "CABRA", "SALSA", "CASCO"
     ];
 
     return ($coleccionPalabras);
@@ -52,14 +53,14 @@ $partida = jugarWordix("MELON", strtolower("MaJo"));
 
 
 
-/*
 do {
-    $opcion = ...;
+    $opcion = trim(fgets(STDIN));
 
     
     switch ($opcion) {
         case 1: 
             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 1
+            
 
             break;
         case 2: 
@@ -73,5 +74,5 @@ do {
         
             //...
     }
-} while ($opcion != X);
-*/
+} while ($opcion != 8);
+
