@@ -16,7 +16,7 @@ include_once("wordix.php");
 *  Legajo: FAI-4284
 *  Carrera:TUDW
 *  mail: pablo.navarro@est.fi.uncoma.edu.ar
-*  Usuario Github:
+*  Usuario Github: github.com/pablonq
 */
 
 //***********************************************************************************/
