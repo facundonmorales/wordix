@@ -27,7 +27,9 @@ const ESTADO_LETRA_PERTENECE = "pertenece";
 /**************************************/
 
 /**
- *  ****COMPLETAR*****
+ * SOLICITA UN NUMERO ENTRE UN VALOR MAXIMO Y MINIMO, EN EL CASO DE QUE ESE NUMERO SOLICITADO SEA UNA PALABRA, LA TRANSFORMA EN NUMERO
+ * @param int $min, $max
+ * @return int
  */
 function solicitarNumeroEntre($min, $max)
 {
@@ -95,7 +97,7 @@ function escribirNormal($texto)
 }
 
 /**
- * Escribe un texto en pantalla teniendo en cuenta el estado.
+ * ESCRIBE UN TEXTO EN PANTALLA TENIENDO EN CUENTA EL ESTADO
  * @param string $texto
  * @param string $estado
  */
@@ -121,7 +123,8 @@ function escribirSegunEstado($texto, $estado)
 }
 
 /**
- * ****COMPLETAR*****
+ * PANTALLA DE INICIO QUE INCLUYE EL NOMBRE DEL JUGADOR
+ * @param string $usuario
  */
 function escribirMensajeBienvenida($usuario)
 {
@@ -134,30 +137,33 @@ function escribirMensajeBienvenida($usuario)
 
 
 /**
- * ****COMPLETAR*****
+ * VERIFICA QUE LA PALABRA QUE SOLO TENGA CARACTERES ALFABETICOS Y QUE LA CANTIDAD DE CARACTERES SEA MAYOR A 0
+ * @param string $cadena
+ * @return boolean
  */
 function esPalabra($cadena)
 {
     //int $cantCaracteres, $i, boolean $esLetra
-    $cantCaracteres = strlen($cadena);
+    $cantCaracteres = strlen($cadena);//DETERMINA LA CANTIDAD DE CARACTERES
     $esLetra = true;
     $i = 0;
     while ($esLetra && $i < $cantCaracteres) {
-        $esLetra =  ctype_alpha($cadena[$i]);
+        $esLetra =  ctype_alpha($cadena[$i]);//VERIFICA SI ALGUNO DE DE LOS CARACTERES ES ALFABETICO
         $i++;
     }
     return $esLetra;
 }
 
 /**
- *  ****COMPLETAR*****
+ *  VERIFICA QUE LA PALABRA INGREADA SEA DE CINCO LETRAS Y QUE SOLO CONTENGA CARACTERES ALFABETICOS
+ * @return string
  */
 function leerPalabra5Letras()
 {
     //string $palabra
     echo "Ingrese una palabra de 5 letras: ";
     $palabra = trim(fgets(STDIN));
-    $palabra  = strtoupper($palabra);
+    $palabra  = strtoupper($palabra);//CONVIERTE PALABRA EN CARACTERES MAYUSCULOS
 
     while ((strlen($palabra) != 5) || !esPalabra($palabra)) {
         echo "Debe ingresar una palabra de 5 letras:";
@@ -168,7 +174,7 @@ function leerPalabra5Letras()
 
 
 /**
- * Inicia una estructura de datos Teclado. La estructura es de tipo: ¿Indexado, asociativo o Multidimensional?
+ * Inicia una estructura de datos Teclado. La estructura es de tipo: asociativo 
  *@return array
  */
 function iniciarTeclado()
@@ -328,15 +334,49 @@ function esIntentoGanado($estructuraPalabraIntento)
     return $ganado;
 }
 
-/**
- * ****COMPLETAR***** documentación de la intefaz
- */
-function obtenerPuntajeWordix()  /* ****COMPLETAR***** parámetros formales necesarios */
-{
 
-    /* ****COMPLETAR***** cuerpo de la función*/
-    return 0;
+/**
+ * Calcula y retorna el puntaje la partida a partir de la palabra jugada y la cantidad de intentos
+ * @param string $palabraOPW
+ * @param int $intentosOPW
+ * @param boolean $esGanadorOPW
+ * @return int
+ */
+function obtenerPuntajeWordix($palabraOPW, $intentosOPW, $esGanadorOPW) {
+    // int $iOPW, $puntajeOPW, $puntajePalabraOPW , $puntajeIntentosOPW
+    $puntajeOPW = 0;
+    $puntajePalabraOPW = 0;
+    $puntajeIntentosOPW = 0;
+    if ($esGanadorOPW == "true") {
+        for ($iOPW = 0; $iOPW < strlen($palabraOPW); $iOPW++) {
+            if ($palabraOPW[$iOPW] == "A" || $palabraOPW[$iOPW] == "E" || $palabraOPW[$iOPW] == "I" || $palabraOPW[$iOPW] == "O" || $palabraOPW[$iOPW] == "U") {
+                $puntajePalabraOPW = $puntajePalabraOPW + 1;
+            } elseif  ($palabraOPW[$iOPW] <= "M") {
+                $puntajePalabraOPW = $puntajePalabraOPW + 2; 
+            } else {
+                $puntajePalabraOPW = $puntajePalabraOPW + 3; 
+            }
+        }
+        if ($intentosOPW == 1) {
+            $puntajeIntentosOPW = 6;
+        } elseif ($intentosOPW == 2) {
+            $puntajeIntentosOPW = 5;
+        } elseif ($intentosOPW == 3) {
+            $puntajeIntentosOPW = 4;
+        } elseif ($intentosOPW == 4) {
+            $puntajeIntentosOPW = 3;
+        } elseif ($intentosOPW == 5) {
+            $puntajeIntentosOPW = 2;
+        } elseif ($intentosOPW == 6) {
+            $puntajeIntentosOPW = 1;
+        }
+        $puntajeOPW = $puntajeIntentosOPW + $puntajePalabraOPW;
+    } else {
+        $puntajeOPW = 0;
+    }
+    return $puntajeOPW;
 }
+
 
 /**
  * Dada una palabra para adivinar, juega una partida de wordix intentando que el usuario adivine la palabra.
@@ -370,12 +410,13 @@ function jugarWordix($palabraWordix, $nombreUsuario)
 
     if ($ganoElIntento) {
         $nroIntento--;
-        $puntaje = obtenerPuntajeWordix();
-        echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!";
+        $puntaje = obtenerPuntajeWordix($palabraWordix, $nroIntento, $ganoElIntento);
+        echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!\n";
+        echo"\n";
     } else {
         $nroIntento = 0; //reset intento
         $puntaje = 0;
-        echo "Seguí Jugando Wordix, la próxima será! ";
+        echo "Seguí Jugando Wordix, la próxima será!\n";
     }
 
     $partida = [
