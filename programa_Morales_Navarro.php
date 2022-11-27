@@ -4,12 +4,12 @@ include_once("wordix.php");
 /***** DATOS DE LOS INTEGRANTES *******/
 /**************************************/
 
-/* Apellido: 
-*  Nombre:
-*  Legajo:
-*  Carrera:
-*  mail:
-*  Usuario Github:
+/* Apellido: Morales
+*  Nombre:  Facundo Nahuel
+*  Legajo:  FAI - 3294
+*  Carrera: TUDW
+*  mail: facundomorales124@gmail.com
+*  Usuario Github: github.com/facundonmorales
 
 *  Apellido: NAVARRO 
 *  Nombre: PABLO
@@ -149,7 +149,7 @@ function buscarPartidaGanada($coleccionPartidasF,$nombreGanaF){
     $i = 0;
     $valor = 0;
     while ( $condicion == true && $i<count($coleccionPartidasF) ) {
-        if ($coleccionPartidasF[$i]["nombre"] == $nombreGanaF){
+        if ($coleccionPartidasF[$i]["jugador"] == $nombreGanaF){
             if($coleccionPartidasF[$i]["puntaje"] > 0){
                 $condicion = false;	
                 $valor = $i;
