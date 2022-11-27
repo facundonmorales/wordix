@@ -1,5 +1,23 @@
 <?php
 include_once("wordix.php");
+/**************************************/
+/***** DATOS DE LOS INTEGRANTES *******/
+/**************************************/
+
+/* Apellido: 
+*  Nombre:
+*  Legajo:
+*  Carrera:
+*  mail:
+*  Usuario Github:
+
+*  Apellido: NAVARRO 
+*  Nombre: PABLO
+*  Legajo: FAI-4284
+*  Carrera:TUDW
+*  mail: pablo.navarro@est.fi.uncoma.edu.ar
+*  Usuario Github:
+*/
 
 //***********************************************************************************/
 /**
