@@ -43,7 +43,7 @@ function cargarColeccionPalabras(){
 function cargarPartidas(){
     //array $coleccionPartidaF
     $coleccionPartidaF[0]=["palabraWordix"=>"MUJER","jugador"=>"pablo","intentos"=>6,"puntaje"=>0];
-    $coleccionPartidaF[1]=["palabraWordix"=>"QUESO","jugador"=>"cata","intentos"=>1,"puntaje"=>14];
+    $coleccionPartidaF[1]=["palabraWordix"=>"QUESO","jugador"=>"facundo","intentos"=>1,"puntaje"=>14];
     $coleccionPartidaF[2]=["palabraWordix"=>"FUEGO","jugador"=>"luca","intentos"=>1,"puntaje"=>14];
     $coleccionPartidaF[3]=["palabraWordix"=>"CASAS","jugador"=>"vladi","intentos"=>6,"puntaje"=>5];
     $coleccionPartidaF[4]=["palabraWordix"=>"RASGO","jugador"=>"valen","intentos"=>4,"puntaje"=>3];
@@ -58,7 +58,7 @@ return $coleccionPartidaF;
 //***********************************************************************************/
 /**
  * MENU DE OPCIONES (3)
- * @return entero
+ * @return int
  */
 function menuOpciones(){
     //int $opcionElegidaF
@@ -118,11 +118,30 @@ function datosPartida($coleccionPartidaF, $numPartidaF){
  */
 function agregarPalabra($coleccionPalabrasF, $nuevaPalabraF){
     
+    //int $i, $rangoArray, $indiceNuevaPalabra
+    //boolean $puedeAgregarse
+    $rangoArray = count($coleccionPalabrasF);
+    $i = 0;
+    $puedeAgregarse = true;
+    while($coleccionPalabrasF[$i] != $nuevaPalabraF && $i < $rangoArray - 1){
+        $i = $i+1;
+    }
+    if($coleccionPalabrasF[$i] == $nuevaPalabraF){
+        $puedeAgregarse = false;
+    }
+    if($puedeAgregarse){
+        $indiceNuevaPalabra = count($coleccionPalabrasF); //Almacena el numero en donde esta la ultima palabra agregada
+        $coleccionPalabrasF[$indiceNuevaPalabra] = $nuevaPalabraF;
+        echo "\nTu palabra: ".$coleccionPalabrasF[$indiceNuevaPalabra].", fue agregada con éxito!\n";
+    }
+    else{
+        echo"\nERROR!! Tu palabra ya se encuentra en Wordix. Intenta nuevamente: \n";
+    }
+    return $coleccionPalabrasF;
     //int $i, $n
-    $n=count($coleccionPalabrasF);
-    for($i=0;$i<$n;$i++){
+    /*for($i=0;$i<$n;$i++){
         if($nuevaPalabraF==$coleccionPalabrasF[$i]){
-            echo"Esta palabra ya está en la base";
+            echo"Esta palabra ya está existe, intente con otra:\n";
             $nuevaPalabraF=leerPalabra5Letras();
             $i=0;
         }
@@ -134,7 +153,7 @@ function agregarPalabra($coleccionPalabrasF, $nuevaPalabraF){
     $nuevaColeccionPalabrasF=$coleccionPalabrasF;
     $nuevaColeccionPalabrasF[$i]=$nuevaPalabraF;
     return $nuevaColeccionPalabrasF;
-    
+    */
 }
 //***********************************************************************************/
 /**
@@ -147,7 +166,7 @@ function buscarPartidaGanada($coleccionPartidasF,$nombreGanaF){
     //boolean $condicion, int $i, $valor
     $condicion = true;
     $i = 0;
-    $valor = 0;
+    $valor = -2;
     while ( $condicion == true && $i<count($coleccionPartidasF) ) {
         if ($coleccionPartidasF[$i]["jugador"] == $nombreGanaF){
             if($coleccionPartidasF[$i]["puntaje"] > 0){
@@ -272,8 +291,8 @@ function cmp($partida1, $partida2) {
  * @param array $coleccionPartidasF
  */
 function ordenPartidas ($coleccionPartidasF){
-    uasort($coleccionPartidasF, "cmp");
-    print_r($coleccionPartidasF);
+    uasort($coleccionPartidasF, "cmp"); //Esta funcion ordena un array con una función de comparación definida por el usuario y mantiene la asociación de índices
+    print_r($coleccionPartidasF); // Imprime informacion sobre las claves y elementos de un array
 }
 
 //***********************************************************************************/
@@ -316,7 +335,7 @@ do {
         case 2:
             $nombreJug = solicitarJugador();
             $numArregloPalabras = count($coleccionPalabras);
-            $numAleatorio= rand(1, $numArregloPalabras);//elije un numero aleatorio
+            $numAleatorio= rand(1, $numArregloPalabras);//elige un numero aleatorio
             $numAleatorio=$numAleatorio-1;
             $palabraAleatoria = $coleccionPalabras[$numAleatorio];
             $numArregloPartidas = count($coleccionPartidas);
@@ -383,7 +402,7 @@ do {
         case 7:
             $palabra = leerPalabra5Letras();
             $coleccionPalabras = agregarPalabra($coleccionPalabras, $palabra);
-            print_r($coleccionPalabras);
+            //print_r($coleccionPalabras);
             break;
         case 8:
             echo "SALIÓ DE WORDIX";
